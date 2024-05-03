@@ -12,15 +12,13 @@ const Start = () => {
     const {userData} = useGlobalStats()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    // Redirect to '/go' if the user is logged in
-    
-    if (userLoggedIn && userData?.patientName !== '' ) {
+  useEffect(() => {  
+    if (userLoggedIn && userData ) {
       navigate('/home');
     } else       
-    if(userLoggedIn && userData?.patientName == '' ) navigate('/registration');
+    if(userLoggedIn && !userData ) navigate('/registration');
 
-  }, [userLoggedIn]);
+  }, [userLoggedIn, userData]);
   return (
     <Box  sx={{
       display: 'flex',

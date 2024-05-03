@@ -21,8 +21,8 @@ function App() {
           <Route path="/registration" element={currentUser ? <Registration /> : ''} />
           <Route path="/home" element={currentUser ? <Home /> : ''} />
         </Routes>
-        <Footer/>
-      </div>
+{      currentUser ?   <Footer/> : ''
+}      </div>
     </Router>
   );
 }
