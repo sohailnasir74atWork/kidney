@@ -5,17 +5,21 @@ import { Box } from '@mui/material';
 import { doSignInWithGoogle } from '../Auth/firebase/firebase';
 import { useAuth } from '../Auth/context/authContext/Index';
 import { useNavigate } from 'react-router-dom';
+import { useGlobalStats } from '../GlobelStats/GlobelStats';
 
 const Start = () => {
     const { userLoggedIn, currentUser } = useAuth();
+    const {userData} = useGlobalStats()
   const navigate = useNavigate()
 
   useEffect(() => {
     // Redirect to '/go' if the user is logged in
     
-    if (userLoggedIn) {
-      navigate('registration');
-    }
+    if (userLoggedIn && userData?.patientName !== '' ) {
+      navigate('/home');
+    } else       
+    if(userLoggedIn && userData?.patientName == '' ) navigate('/registration');
+
   }, [userLoggedIn]);
   return (
     <Box  sx={{

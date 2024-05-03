@@ -36,6 +36,7 @@ export default function RegistrationStepper() {
     highBloodPressure: "",
     diabetes: "",
     message: "",
+    email:""
   });
   React.useEffect(() => {
     if (userData) {
@@ -53,6 +54,7 @@ export default function RegistrationStepper() {
         highBloodPressure: userData.highBloodPressure || "",
         diabetes: userData.diabetes || "",
         message: userData.message || "",
+        email: userData.email || "",
       });
     }
   }, [userData]); // Ensure userData is a dependency here
@@ -82,6 +84,8 @@ export default function RegistrationStepper() {
         return formData.diabetes.trim() !== "";
       case 11:
         return formData.message.trim() !== "";
+      case 12:
+        return formData.email.trim() !== "";
       default:
         return true; // Assuming that there are no validations needed beyond step 8
     }
@@ -114,7 +118,7 @@ export default function RegistrationStepper() {
     if (isStepValid()) {
         updateDatabase(); // Update Firebase before moving to the next step
         setFetchData(!fetchData)
-        navigate('/home')
+        navigate('/home', { state: { congrats: true } });
       } else {
         alert("Please fill all required fields for this step.");
       }
@@ -316,6 +320,19 @@ export default function RegistrationStepper() {
         {activeStep === 12 && (
           <React.Fragment>
             <TextField
+              label="Contact Email"
+              fullWidth
+              sx={{ my: 4.3 }}
+              value={formData.email}
+              onChange={(e) =>
+                handleInputChange("email", e.target.value)
+              }
+            />
+          </React.Fragment>
+        )}
+        {activeStep === 13 && (
+          <React.Fragment>
+            <TextField
               label="Contact Number (Optional)"
               fullWidth
               sx={{ my: 4.3 }}
@@ -343,11 +360,11 @@ export default function RegistrationStepper() {
         </Button>
         <Button
           size="small"
-          onClick={activeStep === 12 ? handleComplete : handleNext}
+          onClick={activeStep === 13 ? handleComplete : handleNext}
           variant="contained"
-          color={activeStep === 12 ? "success" : "primary"}
+          color={activeStep === 13 ? "success" : "primary"}
         >
-          {activeStep === 12 ? "Finish" : "Next"}
+          {activeStep === 13 ? "Finish" : "Next"}
           {theme.direction === "rtl" ? (
             <KeyboardArrowLeft />
           ) : (
