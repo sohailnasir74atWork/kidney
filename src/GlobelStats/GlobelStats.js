@@ -53,7 +53,7 @@ export const ContextProvider = ({ children }) => {
       const users = snapshot.val();
       const filteredUsers = Object.keys(users).filter(key => {
         const user = users[key];
-        return user.bloodType === userData.donorBloodGroup && user.donorBloodGroup === userData.bloodType;
+        return user.bloodType === userData.donorBloodGroup && user.donorBloodGroup === userData.bloodType && user.country === userData.country;
       }).map(key => users[key]);
       setMatchedUser(filteredUsers)
       console.log("Matched users:", filteredUsers);
