@@ -14,6 +14,8 @@ export const ContextProvider = ({ children }) => {
   const [verifiedUser, setVerifiedUser] = useState(false); // State to indicate if user is verified
   const [started, setStarted] = useState(false)
   const [fetchData, setFetchData] = useState(false)
+  const [matchedUser, setMatchedUser] = useState([])
+
 
   const db = getDatabase();
   const usersRef = ref(db, 'users/');
@@ -51,9 +53,9 @@ export const ContextProvider = ({ children }) => {
       const users = snapshot.val();
       const filteredUsers = Object.keys(users).filter(key => {
         const user = users[key];
-        return user.bloodType === "O+" && user.donorBloodGroup === "B+";
+        return user.bloodType === userData.donorBloodGroup && user.donorBloodGroup === userData.bloodType;
       }).map(key => users[key]);
-      
+      setMatchedUser(filteredUsers)
       console.log("Matched users:", filteredUsers);
     } else {
       console.log("No data available");
@@ -71,7 +73,8 @@ export const ContextProvider = ({ children }) => {
         started,
         setStarted,
         setFetchData,
-        fetchData
+        fetchData,
+        matchedUser
         // Additional values can be added here as needed
       }}
     >

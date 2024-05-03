@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
 
 const Home = () => {
-  const { userData, setStarted } = useGlobalStats();
+  const { userData, setStarted, matchedUser } = useGlobalStats();
   const navigate = useNavigate()
   useEffect(()=>{console.log('new data')},[userData])
   const handleupdate= ()=>{
@@ -59,10 +59,13 @@ const Home = () => {
       <br/>
       <br/>
       <h2>Matched Profiles</h2>
-      {/* <span>No matched profile available yet ☹️</span> */}
-      <div className="card-container">
-        <ProfileCard/>
-        </div>
+      {matchedUser.length === 0  && <span>No matched profile available yet ☹️</span>}
+{matchedUser.length > 0 && matchedUser.map(user => (
+  <div key={user.id} className="card-container">
+    <ProfileCard user={user} />
+  </div>
+))}
+    
     </Box>
   );
 };
