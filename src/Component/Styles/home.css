@@ -1,0 +1,51 @@
+.home-container{
+    margin: 50px auto auto;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+@media (max-width: 600px) {
+    .home-container {
+        width: 95%;
+
+    }
+}
+.w-25{
+    width: 25%;
+}
+.w-50{
+    width: 50%;
+}
+.flex{
+    display: flex;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .flex {
+        flex-direction: column; /* Stacks flex items vertically on small screens */
+    }
+}
+ul {
+    margin: 0;      /* Removes the default margin */
+    padding: 0;     /* Removes the default padding */
+    list-style: none; /* Removes the default list-style (bullets) */
+}
+ul li {
+    font-size: .8rem;
+    font-weight: 700;
+    color: red;
+}
+ul li span{
+    font-size: .8rem;
+    font-weight: 700;
+    color: grey;
+}
+.card-container{
+    display: flex;
+}
+@media (max-width: 600px) {
+    .w-50, .w-25 {
+        width: 100%; /* Stacks flex items vertically on small screens */
+    }
+}

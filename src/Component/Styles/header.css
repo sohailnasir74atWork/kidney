@@ -1,0 +1,16 @@
+.header-container {
+    height: 70px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: none !important;
+    background-color: #f85c70;
+
+}
+.content{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+}

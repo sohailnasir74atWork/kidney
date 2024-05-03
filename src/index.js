@@ -3,12 +3,27 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { AuthProvider } from './Auth/context/authContext/Index';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import { ThemeProvider } from '@emotion/react';
+import { theme } from './Theme';
+import ContextProvider from './GlobelStats/GlobelStats';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+      <AuthProvider>
+        <ContextProvider>
+    <ThemeProvider theme={theme}>
     <App />
+    </ThemeProvider>
+    </ContextProvider>
+    </AuthProvider>
+
   </React.StrictMode>
+
 );
 
 // If you want to start measuring performance in your app, pass a function

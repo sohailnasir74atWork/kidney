@@ -1,0 +1,26 @@
+.text-fields-container {
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: auto; 
+    /* min-height: 100vh; */
+    /* overflow: scroll;  */
+}
+
+@media (max-width: 600px) {
+    .text-fields-container {
+        min-height: auto;
+    }
+}
+
+
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
+    border-radius: 50px !important;
+}
+.text-field {
+    font-size: 10px;
+    border-radius: 50px !important;
+}
+
