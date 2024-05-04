@@ -48,6 +48,7 @@ ul li span{
     @media (max-width: 600px) {
             flex-direction: column;
             padding-right: auto;
+            padding-bottom: 20px;
 }
 }
 @media (max-width: 600px) {
