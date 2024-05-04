@@ -143,7 +143,7 @@ export default function RegistrationStepper() {
         sx={{ mx: 0, p: 0 }}
       />
       <Box
-        sx={{ pt: 2, px: 2, pb: 1,  mx: "auto" }}
+        sx={{ pt: 2, pb: 1,  mx: "auto" }}
         className="inputs-container width-control"
       >
         {/* TextFields with onChange */}
@@ -216,6 +216,7 @@ export default function RegistrationStepper() {
             <TextField
               required
               fullWidth
+              onSubmit={handleNext}
               variant="standard"
               placeholder="Write your answer here . . ."
               value={formData.patientAge}
@@ -244,6 +245,7 @@ export default function RegistrationStepper() {
               variant="standard"
               select
               required
+              onSubmit={handleNext}
               fullWidth
               placeholder="Write your answer here . . ."
               value={formData.bloodType}
@@ -281,6 +283,7 @@ export default function RegistrationStepper() {
             <TextField
               fullWidth
               variant="standard"
+              onSubmit={handleNext}
               placeholder="Write your answer here . . ."
               value={formData.patientTissueType}
               sx={{
@@ -306,6 +309,7 @@ export default function RegistrationStepper() {
             </p>
             <TextField
               fullWidth
+              onSubmit={handleNext}
               required
               variant="standard"
               placeholder="Write your answer here . . ."
@@ -334,6 +338,7 @@ export default function RegistrationStepper() {
             <TextField
               fullWidth
               variant="standard"
+              onSubmit={handleNext}
               placeholder="Write your answer here . . ."
               value={formData.donorAge}
               sx={{
@@ -359,6 +364,7 @@ export default function RegistrationStepper() {
               select
               required
               fullWidth
+              onSubmit={handleNext}
               placeholder="Write your answer here . . ."
               variant="standard"
               value={formData.donorBloodGroup}
@@ -396,6 +402,7 @@ export default function RegistrationStepper() {
             </p>
             <TextField
               fullWidth
+              onSubmit={handleNext}
               required
               placeholder="Write your answer here . . ."
               variant="standard"
@@ -424,6 +431,7 @@ export default function RegistrationStepper() {
             <React.Fragment>
               <TextField
                 fullWidth
+                onSubmit={handleNext}
                 variant="standard"
                 placeholder="Write your answer here . . ."
                 select
@@ -458,6 +466,7 @@ export default function RegistrationStepper() {
             <React.Fragment>
               <TextField
                 fullWidth
+                onSubmit={handleNext}
                 variant="standard"
                 placeholder="Write your answer here . . ."
                 required
@@ -490,6 +499,7 @@ export default function RegistrationStepper() {
             <React.Fragment>
               <TextField
                 fullWidth
+                onSubmit={handleNext}
                 variant="standard"
                 placeholder="Write your answer here . . ."
                 multiline
@@ -520,6 +530,7 @@ export default function RegistrationStepper() {
             <React.Fragment>
               <TextField
                 fullWidth
+                onSubmit={handleNext}
                 variant="standard"
                 placeholder="Write your answer here . . ."
                 sx={{
@@ -547,6 +558,7 @@ export default function RegistrationStepper() {
             <React.Fragment>
               <TextField
                 fullWidth
+                onSubmit={handleComplete}
                 variant="standard"
                 placeholder="Write your answer here . . ."
                 value={formData.contactNumber}
