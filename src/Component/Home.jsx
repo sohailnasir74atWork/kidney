@@ -68,12 +68,13 @@ const Home = () => {
       <br/>
       <br/>
       <h2>Matched Profiles</h2>
+      <Box className='card-screen'>
       {matchedUser.length === 0  && <span>No matched profile available yet ☹️</span>}
-{matchedUser.length > 0 && matchedUser.map(user => (
-  <div key={user.id} className="card-container">
+{matchedUser.length > 0 && matchedUser.map((user, index) => (
+  <div key={index} className="card-container">
     <ProfileCard user={user} />
   </div>
-))}
+))}</Box>
     
     </Box></>
   );

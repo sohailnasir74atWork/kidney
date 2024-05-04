@@ -8,9 +8,19 @@
     background-color: #f85c70;
 
 }
+@media (max-width: 600px) {
+    .header-container {
+        height: 50px;
+    }
+}
 .content{
     width: 80%;
     display: flex;
     justify-content: space-between;
     margin: auto;
+}
+@media (max-width: 600px) {
+    .content {
+        width: 95%;
+    }
 }

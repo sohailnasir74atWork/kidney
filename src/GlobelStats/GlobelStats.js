@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { useAuth } from "../Auth/context/authContext/Index";
-import { useNavigate } from "react-router-dom";
-import { getDatabase, ref, query, get } from "firebase/database";
+import { getDatabase, ref, get } from "firebase/database";
+import { query, orderByChild, equalTo } from "firebase/database";
 
 const GlobalStatsContext = createContext();
 
@@ -10,74 +10,94 @@ export const useGlobalStats = () => useContext(GlobalStatsContext);
 export const ContextProvider = ({ children }) => {
   const { currentUser } = useAuth();
   const [activeStep, setActiveStep] = useState(0);
-  const [userData, setUserData] = useState(null); // State to hold user data
-  const [verifiedUser, setVerifiedUser] = useState(false); // State to indicate if user is verified
+  const [userData, setUserData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [started, setStarted] = useState(false)
   const [fetchData, setFetchData] = useState(false)
   const [matchedUser, setMatchedUser] = useState([])
 
 
   const db = getDatabase();
-  const usersRef = ref(db, 'users/');
+
   const fetchUserData = async () => {
     if (currentUser) {
+      setIsLoading(true);
       const uid = currentUser.uid;
-      const dbRef = ref(db, "users/" + uid);
+      const userRef = ref(db, `users/${uid}`);
       try {
-        const snapshot = await get(dbRef);
+        const snapshot = await get(userRef);
         if (snapshot.exists()) {
-          const userData = snapshot.val();
-          setUserData(userData); // Update user data state
-          console.log('userfata',userData)
+          setUserData(snapshot.val());
+          console.log('UserData:', snapshot.val());
         } else {
           console.log("No user data found.");
-          setUserData(null); // Reset user data state
+          setUserData(null);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        setUserData(null); // Reset user data state on error
+        setError(error);
+      } finally {
+        setIsLoading(false);
       }
     } else {
       console.log("No user is logged in.");
-      setUserData(null); // Reset user data state if no user is logged in
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     fetchUserData(); // Fetch user data on component mount or when currentUser changes
-  }, [currentUser, fetchData]);
+  }, [currentUser]);
 
-   
-  get(usersRef).then((snapshot) => {
-    if (snapshot.exists()) {
-      const users = snapshot.val();
-      const filteredUsers = Object.keys(users).filter(key => {
-        const user = users[key];
-        return user.bloodType === userData.donorBloodGroup && user.donorBloodGroup === userData.bloodType && user.country === userData.country;
-      }).map(key => users[key]);
-      setMatchedUser(filteredUsers)
-      console.log("Matched users:", filteredUsers);
-    } else {
-      console.log("No data available");
+  useEffect(() => {
+    if (userData) {
+      // Ideally, implement server-side filtering using Firebase queries if possible
+      fetchMatchedUsers(); // Fetch matched users only when userData is updated and not null
     }
-  }).catch((error) => {
-    console.error(error);
-  });
+  }, [userData, fetchData]);
+
+  const fetchMatchedUsers = () => {
+    if (!userData) return;
+  
+    const usersRef = ref(db, 'users/');
+    const matchedUsersQuery = query(usersRef,
+      orderByChild('country'),
+      equalTo(userData.country)
+    );
+  
+    get(matchedUsersQuery).then((snapshot) => {
+      if (snapshot.exists()) {
+        const users = snapshot.val();
+        const filteredUsers = Object.keys(users).filter(key => {
+          const user = users[key];
+          return user.bloodType === userData.donorBloodGroup && user.donorBloodGroup === userData.bloodType;
+        }).map(key => users[key]);
+        setMatchedUser(filteredUsers);
+        console.log("Matched users:", filteredUsers);
+      } else {
+        console.log("No data available");
+        setMatchedUser([]);
+      }
+    }).catch((error) => {
+      console.error("Error fetching matched users:", error);
+      setError(error);
+    });
+  };
+
   return (
-    <GlobalStatsContext.Provider
-      value={{
-        activeStep,
-        userData,
-        verifiedUser,
-        setActiveStep,
-        started,
-        setStarted,
-        setFetchData,
-        fetchData,
-        matchedUser
-        // Additional values can be added here as needed
-      }}
-    >
+    <GlobalStatsContext.Provider value={{
+      activeStep,
+      setActiveStep,
+      userData,
+      matchedUser,
+      isLoading,
+      error,
+      started,
+      setStarted,
+      fetchData,
+      setFetchData
+    }}>
       {children}
     </GlobalStatsContext.Provider>
   );

@@ -7,6 +7,7 @@
 @media (max-width: 600px) {
     .home-container {
         width: 95%;
+        margin: 20px auto auto;
 
     }
 }
@@ -43,9 +44,20 @@ ul li span{
 }
 .card-container{
     display: flex;
+    padding-right: 20px;
+    @media (max-width: 600px) {
+            flex-direction: column;
+            padding-right: auto;
+}
 }
 @media (max-width: 600px) {
     .w-50, .w-25 {
         width: 100%; /* Stacks flex items vertically on small screens */
     }
+}
+.card-screen{
+    display: flex;
+    @media (max-width: 600px) {
+       flex-direction: column;      
+}
 }

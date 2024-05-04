@@ -1,32 +1,52 @@
-import React, { useEffect } from 'react';
-import "./Styles/registration.css"
+import React, { useEffect, useContext } from 'react';
+import "./Styles/registration.css";  // Make sure the path to the CSS file is correct
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
-import { doSignInWithGoogle } from '../Auth/firebase/firebase';
-import { useAuth } from '../Auth/context/authContext/Index';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Auth/context/authContext/Index';  // Adjust the import path as necessary
+import { doSignInWithGoogle } from '../Auth/firebase/firebase';  // Adjust the import path as necessary
 import { useGlobalStats } from '../GlobelStats/GlobelStats';
+import CircularColor from '../Helper/Loader';
 
 const Start = () => {
-    const { userLoggedIn, currentUser } = useAuth();
-    const {userData} = useGlobalStats()
-  const navigate = useNavigate()
+  const { userLoggedIn } = useAuth();
+  const { userData, isLoading, error, } = useGlobalStats()
+  const navigate = useNavigate();
 
-  useEffect(() => {  
-    if (userLoggedIn && userData ) {
-      navigate('/home');
-    } else       
-    if(userLoggedIn && !userData ) navigate('/registration');
+  useEffect(() => {
+    if (!isLoading && !error) {
+      if (userLoggedIn && userData) {
+        navigate('/home');  // Navigate to the Home page if user data is loaded
+      } else if (userLoggedIn && !userData) {
+        navigate('/registration');  // Navigate to the Registration page if user data is not available
+      }
+    }
+  }, [userLoggedIn, userData, isLoading, error, navigate]);
 
-  }, [userLoggedIn, userData]);
+  const handleLogin = async () => {
+    try {
+      await doSignInWithGoogle();
+    } catch (error) {
+      console.error('Failed to sign in:', error);
+    }
+  };
+
+  if (isLoading) {
+    return <CircularColor/>;  // Show a loading message while data is loading
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;  // Show an error message if there is an error
+  }
+
   return (
-    <Box  sx={{
+    <Box sx={{
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '100vh', // Adjust the height of the container as needed
+      height: '100vh',  // Adjust the height of the container as needed
     }}>
-      <Button variant='contained' onClick={doSignInWithGoogle}>Start</Button>
+      <Button variant='contained' onClick={handleLogin}>Start</Button>
     </Box>
   );
 };
