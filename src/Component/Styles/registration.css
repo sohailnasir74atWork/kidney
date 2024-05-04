@@ -1,7 +1,7 @@
 .registration-container{
     align-items: center;
     @media (max-width: 600px) {
-     align-items: auto;       
+     align-items: start;       
      margin-top: 100px;
         
     }
