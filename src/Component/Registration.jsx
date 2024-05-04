@@ -8,11 +8,11 @@ import { useGlobalStats } from '../GlobelStats/GlobelStats';
 const Registration = () => {
   const  {setStarted, started}= useGlobalStats()
   return (
-    <Box  sx={{
+    <Box        className='registration-container'    
+    sx={{
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center',
-      height: 'calc(100vh - 70px)', // Adjust the height of the container as needed
+      height: 'calc(100vh - 120px)', // Adjust the height of the container as needed
     }}>
 {    !started &&  <Button variant='contained' onClick={()=>setStarted(true)}>Start Registration</Button>
 }      {started && <RegistrationStepper/>}
