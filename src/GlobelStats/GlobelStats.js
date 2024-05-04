@@ -48,7 +48,7 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     fetchUserData(); // Fetch user data on component mount or when currentUser changes
-  }, [currentUser]);
+  }, [currentUser, fetchData]);
 
   useEffect(() => {
     if (userData) {

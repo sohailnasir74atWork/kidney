@@ -117,7 +117,7 @@ export default function RegistrationStepper() {
   const handleComplete = () => {
     if (isStepValid()) {
         updateDatabase(); // Update Firebase before moving to the next step
-        setFetchData(!fetchData)
+        setFetchData(true)
         navigate('/home', { state: { congrats: true } });
       } else {
         alert("Please fill all required fields for this step.");
