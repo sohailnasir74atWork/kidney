@@ -76,8 +76,8 @@ export default function RegistrationStepper() {
         return formData.donorReletaion.trim() !== "";
       case 6:
         return formData.donorAge.trim() !== "";
-      case 7:
-        return formData.donorBloodGroup.trim() !== "";
+      // case 7:
+      //   return formData.donorBloodGroup.trim() !== "";
       // case 8:
       //   return formData.donorTissueType.trim() !== "";
       case 9:
@@ -88,6 +88,8 @@ export default function RegistrationStepper() {
         return formData.message.trim() !== "";
       case 12:
         return formData.email.trim() !== "";
+        case 7: // Check on the step where donor blood group is selected
+        return formData.donorBloodGroup.trim() !== "" && formData.donorBloodGroup !== formData.bloodType;
       default:
         return true; // Assuming that there are no validations needed beyond step 8
     }
@@ -109,12 +111,14 @@ export default function RegistrationStepper() {
   // Navigate steps
   const handleNext = () => {
     if (isStepValid()) {
-      updateDatabase(); // Update Firebase before moving to the next step
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        updateDatabase(); // Update Firebase before moving to the next step
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    } else if (activeStep === 7 && formData.donorBloodGroup === formData.bloodType) {
+        alert("The donor's blood group cannot be the same as the patient's blood group.");
     } else {
-      alert("Please fill all required fields for this step.");
+        alert("Please fill all required fields for this step.");
     }
-  };
+};
 
   const handleComplete = () => {
     if (isStepValid()) {
