@@ -165,11 +165,11 @@ export default function RegistrationStepper() {
               sx={{
                 "& .MuiInputBase-input::placeholder": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                   lineHeight:'1.1em'
 
                 },
@@ -199,11 +199,11 @@ export default function RegistrationStepper() {
               sx={{
                 "& .MuiInputBase-input::placeholder": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                   lineHeight:'1.1em'
 
                 },
@@ -228,11 +228,11 @@ export default function RegistrationStepper() {
               sx={{
                 "& .MuiInputBase-input::placeholder": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                   lineHeight:'1.1em'
 
                 },
@@ -256,11 +256,11 @@ export default function RegistrationStepper() {
               sx={{
                 "& .MuiInputBase-input::placeholder": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                   lineHeight:'1.1em'
 
                 },
@@ -293,11 +293,11 @@ export default function RegistrationStepper() {
               sx={{
                 "& .MuiInputBase-input::placeholder": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
               }}
               onChange={(e) =>
@@ -321,11 +321,11 @@ export default function RegistrationStepper() {
               sx={{
                 "& .MuiInputBase-input::placeholder": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
               }}
               onChange={(e) =>
@@ -348,11 +348,11 @@ export default function RegistrationStepper() {
               sx={{
                 "& .MuiInputBase-input::placeholder": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
               }}
               onChange={(e) => handleInputChange("donorAge", e.target.value)}
@@ -375,11 +375,11 @@ export default function RegistrationStepper() {
               sx={{
                 "& .MuiInputBase-input::placeholder": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                   lineHeight:'1.1em'
 
                 },
@@ -414,11 +414,11 @@ export default function RegistrationStepper() {
               sx={{
                 "& .MuiInputBase-input::placeholder": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
                   color: "red",
-                  fontSize: "2rem",
+                  fontSize: "1.8rem",
                 },
               }}
               onChange={(e) =>
@@ -443,11 +443,11 @@ export default function RegistrationStepper() {
                 sx={{
                   "& .MuiInputBase-input::placeholder": {
                     color: "red",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                   },
                   "& .MuiInputBase-input": {
                     color: "red",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                     lineHeight:'1.1em'
 
                   },
@@ -478,11 +478,11 @@ export default function RegistrationStepper() {
                 sx={{
                   "& .MuiInputBase-input::placeholder": {
                     color: "red",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                   },
                   "& .MuiInputBase-input": {
                     color: "red",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                     lineHeight:'1.1em'
                   },
                 }}
@@ -511,11 +511,11 @@ export default function RegistrationStepper() {
                 sx={{
                   "& .MuiInputBase-input::placeholder": {
                     color: "red",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                   },
                   "& .MuiInputBase-input": {
                     color: "red",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                     lineHeight:'1.1em'
 
                   },
@@ -540,11 +540,11 @@ export default function RegistrationStepper() {
                 sx={{
                   "& .MuiInputBase-input::placeholder": {
                     color: "red",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                   },
                   "& .MuiInputBase-input": {
                     color: "red",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                     lineHeight:'1.1em'
                   },
                 }}
@@ -569,11 +569,11 @@ export default function RegistrationStepper() {
                 sx={{
                   "& .MuiInputBase-input::placeholder": {
                     color: "red",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                   },
                   "& .MuiInputBase-input": {
                     color: "red",
-                    fontSize: "2rem",
+                    fontSize: "1.8rem",
                     lineHeight:'1.1em'
                   },
                 }}
