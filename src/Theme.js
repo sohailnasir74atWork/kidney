@@ -10,10 +10,12 @@ export const theme = createTheme({
           },
     },
     components: {
+      
       MuiTypography: {
         styleOverrides: {
           root: {
             fontSize: "0.9rem",
+
           },
         },
       },

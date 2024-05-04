@@ -12,9 +12,9 @@ const Registration = () => {
     sx={{
       display: 'flex',
       justifyContent: 'center',
-      height: 'calc(100vh - 120px)', // Adjust the height of the container as needed
+       height: 'calc(100vh - 120px)', // Adjust the height of the container as needed
     }}>
-{    !started &&  <Button variant='contained' onClick={()=>setStarted(true)}>Start Registration</Button>
+{    !started &&  <Button variant='contained' className='reg-button' onClick={()=>setStarted(true)}>Start Registration</Button>
 }      {started && <RegistrationStepper/>}
     </Box>
   );
