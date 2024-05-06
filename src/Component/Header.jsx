@@ -24,8 +24,8 @@ const handleLogout = async () => {
   return (
     <div className='header-container'>
     <Box className="content">
-    <div>
-
+    <div className='home-nav'>
+    <a href='https://go.aspireai.io/'>Home</a>
     </div>
     <div>
 <span>

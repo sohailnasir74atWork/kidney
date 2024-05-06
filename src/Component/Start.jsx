@@ -15,9 +15,10 @@ const Start = () => {
 
   useEffect(() => {
     if (!isLoading && !error) {
-      if (userLoggedIn && userData) {
+      if (userData) {
         navigate('/home');  // Navigate to the Home page if user data is loaded
-      } else if (userLoggedIn && !userData) {
+        console.log('delayed console happened')
+      } else if (userData) {
         navigate('/registration');  // Navigate to the Registration page if user data is not available
       }
     }

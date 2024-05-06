@@ -24,3 +24,15 @@
         width: 95%;
     }
 }
+.home-nav {
+    display: flex;
+    align-items: center;
+}
+.home-nav a {
+    color: inherit;        /* Makes the color the same as the parent element */
+    text-decoration: none; /* Removes underline */
+    background-color: transparent; /* Ensures no background color */
+    border: none;          /* Removes any borders */
+    padding: 0;            /* Resets padding */
+    margin: 0;             /* Resets margin */
+}

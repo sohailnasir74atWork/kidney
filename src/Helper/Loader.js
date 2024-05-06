@@ -4,10 +4,18 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 export default function CircularColor() {
   return (
-    <Stack sx={{ color: 'grey.500', height:'100vh' }} spacing={2} direction="row">
+    <Stack 
+      sx={{
+        color: 'grey.500',
+        height: '100vh', // Ensures full viewport height
+        width: '100vw', // Ensures full viewport width
+        justifyContent: 'center', // Centers horizontally
+        alignItems: 'center' // Centers vertically
+      }}
+      spacing={2}
+      direction="row"
+    >
       <CircularProgress color="secondary" />
-      <CircularProgress color="success" />
-      <CircularProgress color="inherit" />
     </Stack>
   );
 }
