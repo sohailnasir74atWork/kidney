@@ -7,7 +7,7 @@ import { useAuth } from '../Auth/context/authContext/Index';  // Adjust the impo
 import { doSignInWithGoogle } from '../Auth/firebase/firebase';  // Adjust the import path as necessary
 import { useGlobalStats } from '../GlobelStats/GlobelStats';
 import CircularColor from '../Helper/Loader';
-
+import logo from "./../Assets/logo2.png"
 const Start = () => {
   const { userLoggedIn } = useAuth();
   const { userData, isLoading, error, } = useGlobalStats()
@@ -43,10 +43,12 @@ const Start = () => {
     <Box sx={{
       display: 'flex',
       justifyContent: 'center',
+      flexDirection:'column',
       alignItems: 'center',
       height: '100vh',  // Adjust the height of the container as needed
     }}>
-      <Button variant='contained' onClick={handleLogin}>Start</Button>
+      <img src={logo} alt='logo' className='fade-in-out'/>
+      <Button variant='contained' onClick={handleLogin}>Login with One Click</Button>
     </Box>
   );
 };

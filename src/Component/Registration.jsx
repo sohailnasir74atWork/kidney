@@ -3,10 +3,8 @@ import "./Styles/registration.css"
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
 import RegistrationStepper from './RegistrationStepper';
-import { useGlobalStats } from '../GlobelStats/GlobelStats';
 
 const Registration = () => {
-  const  {setStarted, started}= useGlobalStats()
   return (
     <Box        className='registration-container'    
     sx={{
@@ -14,9 +12,7 @@ const Registration = () => {
       justifyContent: 'center',
        height: 'calc(100vh - 120px)', // Adjust the height of the container as needed
     }}>
-{    !started &&  <Button variant='contained' className='reg-button' onClick={()=>setStarted(true)}>Start Registration</Button>
-}      {started && <RegistrationStepper/>}
-    </Box>
+      <RegistrationStepper/>   </Box>
   );
 };
 

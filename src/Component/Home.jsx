@@ -9,7 +9,7 @@ import Congratulations from "../Helper/congrats";
 import { useAuth } from "../Auth/context/authContext/Index";
 
 const Home = () => {
-  const { userData, setStarted, matchedUser } = useGlobalStats();
+  const { userData, matchedUser } = useGlobalStats();
   const {currentUser} = useAuth()
   const navigate = useNavigate()
   const location = useLocation();
@@ -17,7 +17,6 @@ const Home = () => {
   useEffect(()=>{console.log('new data')},[userData])
   const handleupdate= ()=>{
     navigate('/registration')
-    setStarted(true)
 
   }
   return (

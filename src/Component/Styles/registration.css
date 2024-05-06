@@ -30,3 +30,11 @@ margin-top: 200px !important;
         width: 95%;
        }
 }
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+  
+  .fade-in-out {
+    animation: fadeInOut 5s infinite; /* Change the duration as needed */
+  }

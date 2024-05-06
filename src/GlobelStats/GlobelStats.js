@@ -13,7 +13,6 @@ export const ContextProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [started, setStarted] = useState(false)
   const [fetchData, setFetchData] = useState(false)
   const [matchedUser, setMatchedUser] = useState([])
 
@@ -57,6 +56,17 @@ export const ContextProvider = ({ children }) => {
     }
   }, [userData, fetchData]);
 
+  const bloodCompatibility = {
+    'O+': ['O+', 'A+', 'B+', 'AB+'],
+    'O-': ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-'],
+    'A+': ['A+', 'AB+'],
+    'A-': ['A+', 'A-', 'AB+', 'AB-'],
+    'B+': ['B+', 'AB+'],
+    'B-': ['B+', 'B-', 'AB+', 'AB-'],
+    'AB+': ['AB+'],
+    'AB-': ['AB+', 'AB-']
+  };
+  
   const fetchMatchedUsers = () => {
     if (!userData) return;
   
@@ -71,7 +81,11 @@ export const ContextProvider = ({ children }) => {
         const users = snapshot.val();
         const filteredUsers = Object.keys(users).filter(key => {
           const user = users[key];
-          return user.bloodType === userData.donorBloodGroup && user.donorBloodGroup === userData.bloodType;
+          // Checking if the current user can donate to the matched user
+          const canDonate = bloodCompatibility[userData.bloodType]?.includes(user.donorBloodGroup);
+          // Checking if the matched user can donate to the current user
+          const canReceive = bloodCompatibility[user.bloodType]?.includes(userData.donorBloodGroup);
+          return canDonate && canReceive;
         }).map(key => users[key]);
         setMatchedUser(filteredUsers);
         console.log("Matched users:", filteredUsers);
@@ -84,6 +98,7 @@ export const ContextProvider = ({ children }) => {
       setError(error);
     });
   };
+  
 
   return (
     <GlobalStatsContext.Provider value={{
@@ -93,8 +108,6 @@ export const ContextProvider = ({ children }) => {
       matchedUser,
       isLoading,
       error,
-      started,
-      setStarted,
       fetchData,
       setFetchData
     }}>

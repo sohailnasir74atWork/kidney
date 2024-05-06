@@ -17,7 +17,7 @@ function App() {
       <div>
         {currentUser ? <Header /> : ''}
         <Routes>
-          <Route path="/" element={<Start />} />
+          <Route path="/login" element={<Start />} />
           <Route path="/registration" element={currentUser ? <Registration /> : ''} />
           <Route path="/home" element={currentUser ? <Home /> : ''} />
         </Routes>

@@ -154,7 +154,7 @@ export default function RegistrationStepper() {
         {activeStep === 0 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
-              1. Select your conutry.
+              1. Select your country.
             </p>
             <TextField
               required
