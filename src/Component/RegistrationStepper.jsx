@@ -2,25 +2,23 @@ import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import MobileStepper from "@mui/material/MobileStepper";
 import Button from "@mui/material/Button";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import "./Styles/registration.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useAuth } from "../Auth/context/authContext/Index";
-import { get, getDatabase, onValue, push, ref, set } from "firebase/database";
+import { ref } from "firebase/database";
 import { update } from "firebase/database";
 import { database } from "../Auth/firebase/auth";
 import { useGlobalStats } from "../GlobelStats/GlobelStats";
-import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { countryList } from "../Helper/countries";
 import { useNavigate } from "react-router-dom";
-import { Typography } from "@mui/material";
+
+
 export default function RegistrationStepper() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const { userData, setFetchData, fetchData } = useGlobalStats();
+  const { userData, setFetchData, bloodCompatibility } = useGlobalStats();
   const navigate = useNavigate();
 
   console.log(userData);
@@ -60,40 +58,59 @@ export default function RegistrationStepper() {
       });
     }
   }, [userData]); // Ensure userData is a dependency here
+  const checkIncompatibility = (donorBlood, recipientBlood) => {
+    // Returns true if the recipient's blood type is not compatible with the donor's blood type
+    return !bloodCompatibility[donorBlood]?.includes(recipientBlood);
+};
+
   const isStepValid = () => {
+    // Check if the donor and recipient blood types are incompatible
+    const checkIncompatibility = (donorBlood, recipientBlood) => {
+        return !bloodCompatibility[donorBlood]?.includes(recipientBlood);
+    };
+
     switch (activeStep) {
-      case 0:
-        return formData.country.trim() !== "";
-      case 1:
-        return formData.patientName.trim() !== "";
-      case 2:
-        return formData.patientAge.trim() !== "";
-      case 3:
-        return formData.bloodType.trim() !== "";
-      // case 4:
-      //   return formData.patientTissueType.trim() !== "";
-      case 5:
-        return formData.donorReletaion.trim() !== "";
-      case 6:
-        return formData.donorAge.trim() !== "";
-      // case 7:
-      //   return formData.donorBloodGroup.trim() !== "";
-      // case 8:
-      //   return formData.donorTissueType.trim() !== "";
-      case 9:
-        return formData.highBloodPressure.trim() !== "";
-      case 10:
-        return formData.diabetes.trim() !== "";
-      case 11:
-        return formData.message.trim() !== "";
-      case 12:
-        return formData.email.trim() !== "";
-        case 7: // Check on the step where donor blood group is selected
-        return formData.donorBloodGroup.trim() !== "" && formData.donorBloodGroup !== formData.bloodType;
-      default:
-        return true; // Assuming that there are no validations needed beyond step 8
+        case 0:
+            return formData.country.trim() !== "";
+        case 1:
+            return formData.patientName.trim() !== "";
+        case 2:
+            return formData.patientAge.trim() !== "";
+        case 3:
+            return formData.bloodType.trim() !== "";
+        case 4:
+            return formData.patientTissueType.trim() !== "";
+        case 5:
+            return formData.donorReletaion.trim() !== "";
+        case 6:
+            return formData.donorAge.trim() !== "";
+            case 7:
+              // Check if blood types are incompatible
+              if (checkIncompatibility(formData.donorBloodGroup, formData.bloodType)) {
+                  // alert("The donor's blood group is not compatible with the recipient's blood group. Proceeding with registration.");
+                  return true;
+              } else {
+                  alert("The donor's blood group is compatible with the recipient's blood group. Registration cannot proceed for compatible pairs.");
+                  return false;
+              }
+        case 8:
+            return formData.donorTissueType.trim() !== "";
+        case 9:
+            return formData.highBloodPressure.trim() !== "";
+        case 10:
+            return formData.diabetes.trim() !== "";
+        case 11:
+            return formData.message.trim() !== "";
+        case 12:
+            return formData.email.trim() !== "";
+        default:
+            return true;
     }
-  };
+};
+
+
+
+
 
   const { currentUser } = useAuth();
 

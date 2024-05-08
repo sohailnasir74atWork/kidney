@@ -9,18 +9,9 @@ import {
 } from "firebase/auth";
 
 
-export const doSignInWithGoogle = async () => {
-  const provider = new GoogleAuthProvider();
-  try {
-    const result = await signInWithPopup(auth, provider);
-    // Additional steps to save or update the user's data in your database
-    console.log("Google sign-in successful");
-    return result.user;
-  } catch (error) {
-    console.error("Error with Google sign-in: ", error);
-    throw error;
-  }
-};
+
+
+
 
 // Function to sign out
 export const doSignOut = () => {

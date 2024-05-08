@@ -47,7 +47,7 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     fetchUserData(); // Fetch user data on component mount or when currentUser changes
-  }, [currentUser, fetchData]);
+  }, [currentUser, fetchData, userData]);
 
   useEffect(() => {
     if (userData) {
@@ -107,6 +107,7 @@ export const ContextProvider = ({ children }) => {
       userData,
       matchedUser,
       isLoading,
+      bloodCompatibility,
       error,
       fetchData,
       setFetchData
