@@ -9,14 +9,15 @@ import Congratulations from "../Helper/congrats";
 import { useAuth } from "../Auth/context/authContext/Index";
 
 const Home = () => {
-  const { userData, matchedUser } = useGlobalStats();
+  const { userData, matchedUser, setActiveStep } = useGlobalStats();
   const {currentUser} = useAuth()
   const navigate = useNavigate()
   const location = useLocation();
   const { congrats } = location.state || {}; // Ensure to provide a fallback if state is undefined
-  useEffect(()=>{console.log('new data')},[userData])
+  // useEffect(()=>{console.log('new data')},[userData])
   const handleupdate= ()=>{
     navigate('/registration')
+    setActiveStep(0)
 
   }
   return (
@@ -29,7 +30,8 @@ const Home = () => {
         <div className="w-25">
             <h4>Patient Information</h4>
             <ul>
-                <li>Patient Country: <br/><span>{userData?.country ? userData.country : 'Not Available' }</span></li>
+                <li><span>Patient Country:</span><br/>{userData?.country ? userData.country : 'Not Available' }</li>
+                <li>Patient City <br/><span>{userData?.city ? userData.city : 'Not Available' }</span></li>
                 <li>Patient Name: <br/><span>{userData?.patientName ? userData.patientName : 'Not Available'}</span></li>
                 <li>Patient Age: <br/><span>{userData?.patientAge ? userData.patientAge : 'Not Available'}</span></li>
                 <li>Patient Blood Group: <br/><span>{userData?.bloodType ? userData.bloodType : 'Not Available'}</span></li>

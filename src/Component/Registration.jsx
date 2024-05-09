@@ -10,7 +10,7 @@ const Registration = () => {
     sx={{
       display: 'flex',
       justifyContent: 'center',
-       height: 'calc(100vh - 120px)', // Adjust the height of the container as needed
+       minHeight: 'calc(100vh - 70px)', // Adjust the height of the container as needed
     }}>
       <RegistrationStepper/>   </Box>
   );

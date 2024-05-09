@@ -13,17 +13,18 @@ import { useGlobalStats } from "../GlobelStats/GlobelStats";
 import MenuItem from "@mui/material/MenuItem";
 import { countryList } from "../Helper/countries";
 import { useNavigate } from "react-router-dom";
-
+import Swal from 'sweetalert2';
+import { useEffect } from "react";
 
 export default function RegistrationStepper() {
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const { userData, setFetchData, bloodCompatibility } = useGlobalStats();
+  const { userData, setFetchData, bloodCompatibility, activeStep, setActiveStep } = useGlobalStats();
   const navigate = useNavigate();
 
-  console.log(userData);
+  // console.log(userData);
   const [formData, setFormData] = React.useState({
     country: "Pakistan",
+    city: "",
     patientName: "",
     contactNumber: "",
     patientAge: "",
@@ -42,6 +43,7 @@ export default function RegistrationStepper() {
     if (userData) {
       setFormData({
         country: userData.country || "",
+        city: userData.city || "",
         patientName: userData.patientName || "",
         patientAge: userData.patientAge || "",
         bloodType: userData.bloodType || "",
@@ -58,64 +60,79 @@ export default function RegistrationStepper() {
       });
     }
   }, [userData]); // Ensure userData is a dependency here
-  const checkIncompatibility = (donorBlood, recipientBlood) => {
-    // Returns true if the recipient's blood type is not compatible with the donor's blood type
-    return !bloodCompatibility[donorBlood]?.includes(recipientBlood);
-};
+  
 
+  // function showSuccessAlert() {
+  //   Swal.fire({
+  //     title: 'Success!',
+  //     text: 'Your operation was successful!',
+  //     icon: 'success',
+  //     confirmButtonText: 'Great!'
+  //   });
+  // }
+  
+  // function showErrorAlert() {
+  //   Swal.fire({
+  //     title: 'Error!',
+  //     text: 'Something went wrong!',
+  //     icon: 'error',
+  //     confirmButtonText: 'Try Again'
+  //   });
+  // }
   const isStepValid = () => {
     // Check if the donor and recipient blood types are incompatible
-    const checkIncompatibility = (donorBlood, recipientBlood) => {
-        return !bloodCompatibility[donorBlood]?.includes(recipientBlood);
+    const checkCompatibility = (donorBlood, recipientBlood) => {
+      return bloodCompatibility[donorBlood]?.includes(recipientBlood);
     };
 
     switch (activeStep) {
-        case 0:
-            return formData.country.trim() !== "";
-        case 1:
-            return formData.patientName.trim() !== "";
-        case 2:
-            return formData.patientAge.trim() !== "";
-        case 3:
-            return formData.bloodType.trim() !== "";
-        case 4:
-            return formData.patientTissueType.trim() !== "";
-        case 5:
-            return formData.donorReletaion.trim() !== "";
-        case 6:
-            return formData.donorAge.trim() !== "";
-            case 7:
-              // Check if blood types are incompatible
-              if (checkIncompatibility(formData.donorBloodGroup, formData.bloodType)) {
-                  // alert("The donor's blood group is not compatible with the recipient's blood group. Proceeding with registration.");
-                  return true;
-              } else {
-                  alert("The donor's blood group is compatible with the recipient's blood group. Registration cannot proceed for compatible pairs.");
-                  return false;
-              }
-        case 8:
-            return formData.donorTissueType.trim() !== "";
-        case 9:
-            return formData.highBloodPressure.trim() !== "";
-        case 10:
-            return formData.diabetes.trim() !== "";
-        case 11:
-            return formData.message.trim() !== "";
-        case 12:
-            return formData.email.trim() !== "";
-        default:
-            return true;
+      case 0:
+        return formData.country.trim() !== "";
+      case 1:
+        return formData.city.trim() !== "";
+      case 2:
+        return formData.patientName.trim() !== "";
+      case 3:
+        return formData.patientAge.trim() !== "";
+      case 4:
+        return formData.bloodType.trim() !== "";
+      case 5:
+        return formData.patientTissueType.trim() !== "";
+      case 6:
+        return formData.donorReletaion.trim() !== "";
+      case 7:
+        return formData.donorAge.trim() !== "";
+      case 8:
+        // Check if blood types are incompatible
+        if (checkCompatibility(formData.donorBloodGroup, formData.bloodType)) {
+          Swal.fire({ // SweetAlert error message
+            title: 'Already Compatible',
+            text: 'This match is already compatible, but you can still register to find an even better match.',           
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+          return true;
+        } 
+      case 9:
+        return formData.donorTissueType.trim() !== "";
+      case 10:
+        return formData.highBloodPressure.trim() !== "";
+      case 11:
+        return formData.diabetes.trim() !== "";
+      case 12:
+        return formData.message.trim() !== "";
+      case 13:
+        return formData.email.trim() !== "";
+      default:
+        return true;
     }
-};
-
-
-
-
+  };
 
   const { currentUser } = useAuth();
 
   // Update local state
   const handleInputChange = (field, value) => {
+    console.log('VALUE', value)
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -128,14 +145,25 @@ export default function RegistrationStepper() {
   // Navigate steps
   const handleNext = () => {
     if (isStepValid()) {
-        updateDatabase(); // Update Firebase before moving to the next step
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    } else if (activeStep === 7 && formData.donorBloodGroup === formData.bloodType) {
-        alert("The donor's blood group cannot be the same as the patient's blood group.");
+      updateDatabase(); // Update Firebase before moving to the next step
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  
+      // Swal.fire({ // SweetAlert success message
+      //   title: 'Step Complete!',
+      //   text: 'You have successfully completed this step.',
+      //   icon: 'success',
+      //   confirmButtonText: 'OK'
+      // });
     } else {
-        alert("Please fill all required fields for this step.");
+      Swal.fire({ // SweetAlert error message
+        title: 'Incomplete Step!',
+        text: 'Please fill all required fields for this step.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
     }
-};
+  };
+  
 
   const handleComplete = () => {
     if (isStepValid()) {
@@ -143,7 +171,17 @@ export default function RegistrationStepper() {
       setFetchData(true);
       navigate("/home", { state: { congrats: true } });
     } else {
-      alert("Please fill all required fields for this step.");
+      // alert("Please fill all required fields for this step.");
+    }
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent the default action of the enter key
+      if (activeStep === 14) {
+        handleComplete(); // If it's the last step, call handleComplete
+      } else {
+        handleNext(); // Otherwise, move to the next step
+      }
     }
   };
 
@@ -152,19 +190,21 @@ export default function RegistrationStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
   const handleCountryChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    // setFormData((prev) => ({ ...prev, [field]: value }));
+    updateDatabase(); // Update Firebase before moving to the next step
+
   };
   return (
     <Box className="stepper-container">
       <MobileStepper
         variant="progress"
-        steps={13} // Adjust total steps to 8
+        steps={14} // Adjust total steps to 8
         position="static"
         activeStep={activeStep}
         sx={{ mx: 0, p: 0 }}
       />
       <Box
-        sx={{ pt: 2, pb: 1,  mx: "auto" }}
+        sx={{ pt: 2, pb: 1, mx: "auto" }}
         className="inputs-container width-control"
       >
         {/* TextFields with onChange */}
@@ -179,6 +219,7 @@ export default function RegistrationStepper() {
               variant="standard"
               fullWidth
               value={formData.country}
+              onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               sx={{
                 "& .MuiInputBase-input::placeholder": {
                   color: "red",
@@ -187,11 +228,10 @@ export default function RegistrationStepper() {
                 "& .MuiInputBase-input": {
                   color: "red",
                   fontSize: "1.8rem",
-                  lineHeight:'1.1em'
-
+                  lineHeight: "1.1em",
                 },
               }}
-              onChange={(e) => handleCountryChange("country", e.target.value)}
+              onChange={(e) => handleInputChange('country', e.target.value)}
             >
               {countryList.map((country, index) => (
                 <MenuItem key={index} value={country}>
@@ -204,12 +244,41 @@ export default function RegistrationStepper() {
         {activeStep === 1 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
+              2. What is the name of your city?
+            </p>
+            <TextField
+              required
+              fullWidth
+              placeholder="Write your answer here . . ."
+              onKeyDown={handleKeyDown} // Add the onKeyDown event handler
+              variant="standard"
+              onSubmit={handleNext}
+              value={formData.city}
+              sx={{
+                "& .MuiInputBase-input::placeholder": {
+                  color: "red",
+                  fontSize: "1.8rem",
+                },
+                "& .MuiInputBase-input": {
+                  color: "red",
+                  fontSize: "1.8rem",
+                  lineHeight: "1.1em",
+                },
+              }}
+              onChange={(e) => handleInputChange("city", e.target.value)}
+            />
+          </>
+        )}
+        {activeStep === 2 && (
+          <>
+            <p sx={{ mx: 2 }} className="questions">
               2. What is the name of the patient?
             </p>
             <TextField
               required
               fullWidth
               placeholder="Write your answer here . . ."
+              onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               variant="standard"
               onSubmit={handleNext}
               value={formData.patientName}
@@ -221,15 +290,14 @@ export default function RegistrationStepper() {
                 "& .MuiInputBase-input": {
                   color: "red",
                   fontSize: "1.8rem",
-                  lineHeight:'1.1em'
-
+                  lineHeight: "1.1em",
                 },
               }}
               onChange={(e) => handleInputChange("patientName", e.target.value)}
             />
           </>
         )}
-        {activeStep === 2 && (
+        {activeStep === 3 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
               3. What is patient age?
@@ -239,6 +307,14 @@ export default function RegistrationStepper() {
               fullWidth
               onSubmit={handleNext}
               variant="standard"
+              onKeyDown={handleKeyDown} // Add the onKeyDown event handler
+              type="number"
+              InputProps={{
+                inputProps: {
+                  min: 0, // Optional: Minimum value
+                  max: 80, // Optional: Maximum value
+                },
+              }}
               placeholder="Write your answer here . . ."
               value={formData.patientAge}
               onChange={(e) => handleInputChange("patientAge", e.target.value)}
@@ -250,14 +326,13 @@ export default function RegistrationStepper() {
                 "& .MuiInputBase-input": {
                   color: "red",
                   fontSize: "1.8rem",
-                  lineHeight:'1.1em'
-
+                  lineHeight: "1.1em",
                 },
               }}
             />
           </>
         )}
-        {activeStep === 3 && (
+        {activeStep === 4 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
               4. Select patient blood group.
@@ -267,6 +342,7 @@ export default function RegistrationStepper() {
               select
               required
               onSubmit={handleNext}
+              onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               fullWidth
               placeholder="Write your answer here . . ."
               value={formData.bloodType}
@@ -278,34 +354,30 @@ export default function RegistrationStepper() {
                 "& .MuiInputBase-input": {
                   color: "red",
                   fontSize: "1.8rem",
-                  lineHeight:'1.1em'
-
+                  lineHeight: "1.1em",
                 },
               }}
               onChange={(e) => handleInputChange("bloodType", e.target.value)}
             >
-              <MenuItem value="A+">A+</MenuItem>
-              <MenuItem value="A-">A-</MenuItem>
-              <MenuItem value="B+">B+</MenuItem>
-              <MenuItem value="B-">B-</MenuItem>
-              <MenuItem value="AB+">AB+</MenuItem>
-              <MenuItem value="AB-">AB-</MenuItem>
-              <MenuItem value="O+">O+</MenuItem>
-              <MenuItem value="O-">O-</MenuItem>
+              <MenuItem value="A">A</MenuItem>
+              <MenuItem value="B">B</MenuItem>
+              <MenuItem value="AB">AB</MenuItem>
+              <MenuItem value="O">O</MenuItem>
             </TextField>
           </>
         )}
 
-        {activeStep === 4 && (
+        {activeStep === 5 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
-              5. Write tissue typing of patient (if available).
+              5. Write tissue typing of patient (if not available then write "Not Available").
             </p>
             <TextField
               fullWidth
               variant="standard"
               onSubmit={handleNext}
-              placeholder="Write your answer here . . ."
+              placeholder="A*02, A*03, B*07, B*08, DRB1*15, DRB1*04"
+              onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               value={formData.patientTissueType}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
@@ -323,7 +395,7 @@ export default function RegistrationStepper() {
             />
           </>
         )}
-        {activeStep === 5 && (
+        {activeStep === 6 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
               6. What is Donor's relation with Patient.
@@ -334,6 +406,7 @@ export default function RegistrationStepper() {
               required
               variant="standard"
               placeholder="Write your answer here . . ."
+              onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               value={formData.donorReletaion}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
@@ -351,7 +424,7 @@ export default function RegistrationStepper() {
             />
           </>
         )}
-        {activeStep === 6 && (
+        {activeStep === 7 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
               7. Waht is donor's age ?
@@ -359,8 +432,16 @@ export default function RegistrationStepper() {
             <TextField
               fullWidth
               variant="standard"
+              onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               onSubmit={handleNext}
               placeholder="Write your answer here . . ."
+              type="number"
+              InputProps={{
+                inputProps: {
+                  min: 16, // Optional: Minimum value
+                  max: 60, // Optional: Maximum value
+                },
+              }}
               value={formData.donorAge}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
@@ -376,7 +457,7 @@ export default function RegistrationStepper() {
             />
           </>
         )}
-        {activeStep === 7 && (
+        {activeStep === 8 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
               8. What is donor blood group ?
@@ -386,6 +467,7 @@ export default function RegistrationStepper() {
               required
               fullWidth
               onSubmit={handleNext}
+              onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               placeholder="Write your answer here . . ."
               variant="standard"
               value={formData.donorBloodGroup}
@@ -397,35 +479,31 @@ export default function RegistrationStepper() {
                 "& .MuiInputBase-input": {
                   color: "red",
                   fontSize: "1.8rem",
-                  lineHeight:'1.1em'
-
+                  lineHeight: "1.1em",
                 },
               }}
               onChange={(e) =>
                 handleInputChange("donorBloodGroup", e.target.value)
               }
             >
-              <MenuItem value="A+">A+</MenuItem>
-              <MenuItem value="A-">A-</MenuItem>
-              <MenuItem value="B+">B+</MenuItem>
-              <MenuItem value="B-">B-</MenuItem>
-              <MenuItem value="AB+">AB+</MenuItem>
-              <MenuItem value="AB-">AB-</MenuItem>
-              <MenuItem value="O+">O+</MenuItem>
-              <MenuItem value="O-">O-</MenuItem>
+              <MenuItem value="A">A</MenuItem>
+              <MenuItem value="B">B</MenuItem>
+              <MenuItem value="AB">AB</MenuItem>
+              <MenuItem value="O">O</MenuItem>
             </TextField>
           </>
         )}
-        {activeStep === 8 && (
+        {activeStep === 9 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
-              9. Write tissue typing of donor (if available).
+              9. Write tissue typing of donor (if not available then write "Not Available").
             </p>
             <TextField
               fullWidth
               onSubmit={handleNext}
+              onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               required
-              placeholder="Write your answer here . . ."
+              placeholder="A*02, A*03, B*07, B*08, DRB1*15, DRB1*04"
               variant="standard"
               value={formData.donorTissueType}
               sx={{
@@ -444,7 +522,7 @@ export default function RegistrationStepper() {
             />
           </>
         )}
-        {activeStep === 9 && (
+        {activeStep === 10 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
               10. Does the donor have high blood pressure?
@@ -453,6 +531,7 @@ export default function RegistrationStepper() {
               <TextField
                 fullWidth
                 onSubmit={handleNext}
+                onKeyDown={handleKeyDown} // Add the onKeyDown event handler
                 variant="standard"
                 placeholder="Write your answer here . . ."
                 select
@@ -465,8 +544,7 @@ export default function RegistrationStepper() {
                   "& .MuiInputBase-input": {
                     color: "red",
                     fontSize: "1.8rem",
-                    lineHeight:'1.1em'
-
+                    lineHeight: "1.1em",
                   },
                 }}
                 onChange={(e) =>
@@ -479,7 +557,7 @@ export default function RegistrationStepper() {
             </React.Fragment>
           </>
         )}
-        {activeStep === 10 && (
+        {activeStep === 11 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
               11. Does the donor have Diabetic?
@@ -488,6 +566,7 @@ export default function RegistrationStepper() {
               <TextField
                 fullWidth
                 onSubmit={handleNext}
+                onKeyDown={handleKeyDown} // Add the onKeyDown event handler
                 variant="standard"
                 placeholder="Write your answer here . . ."
                 required
@@ -500,7 +579,7 @@ export default function RegistrationStepper() {
                   "& .MuiInputBase-input": {
                     color: "red",
                     fontSize: "1.8rem",
-                    lineHeight:'1.1em'
+                    lineHeight: "1.1em",
                   },
                 }}
                 select
@@ -512,7 +591,7 @@ export default function RegistrationStepper() {
             </React.Fragment>
           </>
         )}
-        {activeStep === 11 && (
+        {activeStep === 12 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
               12. Any additional information you want to share?
@@ -521,6 +600,7 @@ export default function RegistrationStepper() {
               <TextField
                 fullWidth
                 onSubmit={handleNext}
+                onKeyDown={handleKeyDown} // Add the onKeyDown event handler
                 variant="standard"
                 placeholder="Write your answer here . . ."
                 multiline
@@ -533,8 +613,7 @@ export default function RegistrationStepper() {
                   "& .MuiInputBase-input": {
                     color: "red",
                     fontSize: "1.8rem",
-                    lineHeight:'1.1em'
-
+                    lineHeight: "1.1em",
                   },
                 }}
                 value={formData.message}
@@ -543,7 +622,7 @@ export default function RegistrationStepper() {
             </React.Fragment>
           </>
         )}
-        {activeStep === 12 && (
+        {activeStep === 13 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
               13. What is contact email address ?
@@ -552,6 +631,7 @@ export default function RegistrationStepper() {
               <TextField
                 fullWidth
                 onSubmit={handleNext}
+                onKeyDown={handleKeyDown} // Add the onKeyDown event handler
                 variant="standard"
                 placeholder="Write your answer here . . ."
                 sx={{
@@ -562,7 +642,7 @@ export default function RegistrationStepper() {
                   "& .MuiInputBase-input": {
                     color: "red",
                     fontSize: "1.8rem",
-                    lineHeight:'1.1em'
+                    lineHeight: "1.1em",
                   },
                 }}
                 value={formData.email}
@@ -571,7 +651,7 @@ export default function RegistrationStepper() {
             </React.Fragment>
           </>
         )}
-        {activeStep === 13 && (
+        {activeStep === 14 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
               14. What is your phone number ? (Optional)
@@ -580,6 +660,7 @@ export default function RegistrationStepper() {
               <TextField
                 fullWidth
                 onSubmit={handleComplete}
+                onKeyDown={handleKeyDown} // Add the onKeyDown event handler
                 variant="standard"
                 placeholder="Write your answer here . . ."
                 value={formData.contactNumber}
@@ -591,7 +672,7 @@ export default function RegistrationStepper() {
                   "& .MuiInputBase-input": {
                     color: "red",
                     fontSize: "1.8rem",
-                    lineHeight:'1.1em'
+                    lineHeight: "1.1em",
                   },
                 }}
                 onChange={(e) =>
@@ -603,7 +684,8 @@ export default function RegistrationStepper() {
         )}
       </Box>
       <Box
-        sx={{ display: "flex",  m: "auto", justifyContent: "left" }} className='width-control'
+        sx={{ display: "flex", m: "auto", justifyContent: "left" }}
+        className="width-control"
       >
         <Button
           size="small"
@@ -621,11 +703,11 @@ export default function RegistrationStepper() {
         </Button>
         <Button
           size="small"
-          onClick={activeStep === 13 ? handleComplete : handleNext}
+          onClick={activeStep === 14 ? handleComplete : handleNext}
           variant="contained"
-          color={activeStep === 13 ? "success" : "primary"}
+          color={activeStep === 14 ? "success" : "primary"}
         >
-          {activeStep === 13 ? "Finish" : "Next"}
+          {activeStep === 14 ? "Finish" : "Next"}
           {/* {theme.direction === "rtl" ? (
             <KeyboardArrowLeft />
           ) : (

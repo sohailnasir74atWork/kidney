@@ -13,12 +13,14 @@ export const ContextProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [fetchData, setFetchData] = useState(false)
-  const [matchedUser, setMatchedUser] = useState([])
+  const [fetchData, setFetchData] = useState(false);
+  const [matchedUser, setMatchedUser] = useState([]);
+  
 
 
   const db = getDatabase();
-
+ 
+  
   const fetchUserData = async () => {
     if (currentUser) {
       setIsLoading(true);
@@ -46,45 +48,36 @@ export const ContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchUserData(); // Fetch user data on component mount or when currentUser changes
-  }, [currentUser, fetchData, userData]);
+    fetchUserData();
+  }, [activeStep, currentUser]);
 
   useEffect(() => {
     if (userData) {
-      // Ideally, implement server-side filtering using Firebase queries if possible
-      fetchMatchedUsers(); // Fetch matched users only when userData is updated and not null
+      fetchMatchedUsers();
     }
-  }, [userData, fetchData]);
+  }, [fetchData, userData]);
 
   const bloodCompatibility = {
-    'O+': ['O+', 'A+', 'B+', 'AB+'],
-    'O-': ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-'],
-    'A+': ['A+', 'AB+'],
-    'A-': ['A+', 'A-', 'AB+', 'AB-'],
-    'B+': ['B+', 'AB+'],
-    'B-': ['B+', 'B-', 'AB+', 'AB-'],
-    'AB+': ['AB+'],
-    'AB-': ['AB+', 'AB-']
+    'A': ['A', 'AB'],
+    'B': ['B', 'AB'],
+    'AB': ['AB'],
+    'O': ['A', 'B', 'AB', 'O']  // O is the universal donor
   };
-  
+
   const fetchMatchedUsers = () => {
+    console.log('started')
     if (!userData) return;
-  
     const usersRef = ref(db, 'users/');
-    const matchedUsersQuery = query(usersRef,
-      orderByChild('country'),
-      equalTo(userData.country)
-    );
-  
+    const matchedUsersQuery = query(usersRef, orderByChild('country'), equalTo(userData.country));
     get(matchedUsersQuery).then((snapshot) => {
       if (snapshot.exists()) {
         const users = snapshot.val();
         const filteredUsers = Object.keys(users).filter(key => {
           const user = users[key];
-          // Checking if the current user can donate to the matched user
-          const canDonate = bloodCompatibility[userData.bloodType]?.includes(user.donorBloodGroup);
-          // Checking if the matched user can donate to the current user
+          const canDonate = bloodCompatibility[userData.donorBloodGroup]?.includes(user.bloodType);
           const canReceive = bloodCompatibility[user.bloodType]?.includes(userData.donorBloodGroup);
+         
+          console.log(canDonate, canReceive)
           return canDonate && canReceive;
         }).map(key => users[key]);
         setMatchedUser(filteredUsers);
@@ -98,7 +91,6 @@ export const ContextProvider = ({ children }) => {
       setError(error);
     });
   };
-  
 
   return (
     <GlobalStatsContext.Provider value={{
