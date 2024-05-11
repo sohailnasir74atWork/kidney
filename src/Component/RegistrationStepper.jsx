@@ -112,7 +112,7 @@ export default function RegistrationStepper() {
             confirmButtonText: 'OK'
           });
           return true;
-        } 
+        }  else return true;
       case 9:
         return formData.donorTissueType.trim() !== "";
       case 10:
