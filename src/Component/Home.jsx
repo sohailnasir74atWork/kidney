@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Styles/home.css";
 import Button from "@mui/material/Button";
-import { Box, Divider, Grid } from "@mui/material";
+import { Box, Divider, Grid, useMediaQuery } from "@mui/material";
 import { useGlobalStats } from "../GlobelStats/GlobelStats";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
 import Congratulations from "../Helper/congrats";
-import { useAuth } from "../Auth/context/authContext/Index";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -19,6 +18,8 @@ const Home = () => {
   const location = useLocation();
   const { congrats } = location.state || {}; // Ensure to provide a fallback if state is undefined
   // useEffect(()=>{console.log('new data')},[userData])
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
   const handleupdate = () => {
     navigate("/registration");
     setActiveStep(0);
@@ -29,7 +30,7 @@ const Home = () => {
       <Box className="home-container">
         <h2>My Profile</h2>
         <Divider />
-        <div className="flex">
+        <div className={!isMobile ? "flex" : 'flex-mobile'}>
           <div className="w-25">
             <h4>Patient Information</h4>
             <ul className="green">
