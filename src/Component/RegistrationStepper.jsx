@@ -157,7 +157,7 @@ export default function RegistrationStepper() {
     } else {
       Swal.fire({ // SweetAlert error message
         title: 'Incomplete Step!',
-        text: 'Please fill all required fields for this step.',
+        text: 'Please fill all  fields for this step.',
         icon: 'error',
         confirmButtonText: 'OK'
       });
@@ -171,7 +171,7 @@ export default function RegistrationStepper() {
       setFetchData(true);
       navigate("/home", { state: { congrats: true } });
     } else {
-      // alert("Please fill all required fields for this step.");
+      // alert("Please fill all  fields for this step.");
     }
   };
   const handleKeyDown = (event) => {
@@ -214,7 +214,7 @@ export default function RegistrationStepper() {
               1. Select your country.
             </p>
             <TextField
-              required
+              
               select
               variant="standard"
               fullWidth
@@ -222,11 +222,11 @@ export default function RegistrationStepper() {
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               sx={{
                 "& .MuiInputBase-input::placeholder": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                   lineHeight: "1.1em",
                 },
@@ -247,7 +247,7 @@ export default function RegistrationStepper() {
               2. What is the name of your city?
             </p>
             <TextField
-              required
+              
               fullWidth
               placeholder="Write your answer here . . ."
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
@@ -256,11 +256,11 @@ export default function RegistrationStepper() {
               value={formData.city}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                   lineHeight: "1.1em",
                 },
@@ -275,7 +275,7 @@ export default function RegistrationStepper() {
               2. What is the name of the patient?
             </p>
             <TextField
-              required
+              
               fullWidth
               placeholder="Write your answer here . . ."
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
@@ -284,11 +284,11 @@ export default function RegistrationStepper() {
               value={formData.patientName}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                   lineHeight: "1.1em",
                 },
@@ -303,7 +303,7 @@ export default function RegistrationStepper() {
               3. What is patient age?
             </p>
             <TextField
-              required
+              
               fullWidth
               onSubmit={handleNext}
               variant="standard"
@@ -320,11 +320,11 @@ export default function RegistrationStepper() {
               onChange={(e) => handleInputChange("patientAge", e.target.value)}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                   lineHeight: "1.1em",
                 },
@@ -340,7 +340,7 @@ export default function RegistrationStepper() {
             <TextField
               variant="standard"
               select
-              required
+              
               onSubmit={handleNext}
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               fullWidth
@@ -348,11 +348,11 @@ export default function RegistrationStepper() {
               value={formData.bloodType}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                   lineHeight: "1.1em",
                 },
@@ -381,11 +381,11 @@ export default function RegistrationStepper() {
               value={formData.patientTissueType}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
               }}
@@ -403,18 +403,18 @@ export default function RegistrationStepper() {
             <TextField
               fullWidth
               onSubmit={handleNext}
-              required
+              
               variant="standard"
               placeholder="Write your answer here . . ."
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               value={formData.donorReletaion}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
               }}
@@ -445,11 +445,11 @@ export default function RegistrationStepper() {
               value={formData.donorAge}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
               }}
@@ -464,7 +464,7 @@ export default function RegistrationStepper() {
             </p>
             <TextField
               select
-              required
+              
               fullWidth
               onSubmit={handleNext}
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
@@ -473,11 +473,11 @@ export default function RegistrationStepper() {
               value={formData.donorBloodGroup}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                   lineHeight: "1.1em",
                 },
@@ -502,17 +502,17 @@ export default function RegistrationStepper() {
               fullWidth
               onSubmit={handleNext}
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
-              required
+              
               placeholder="A*02, A*03, B*07, B*08, DRB1*15, DRB1*04"
               variant="standard"
               value={formData.donorTissueType}
               sx={{
                 "& .MuiInputBase-input::placeholder": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
                 "& .MuiInputBase-input": {
-                  color: "red",
+                  color: "#f85c70",
                   fontSize: "1.8rem",
                 },
               }}
@@ -538,11 +538,11 @@ export default function RegistrationStepper() {
                 value={formData.highBloodPressure}
                 sx={{
                   "& .MuiInputBase-input::placeholder": {
-                    color: "red",
+                    color: "#f85c70",
                     fontSize: "1.8rem",
                   },
                   "& .MuiInputBase-input": {
-                    color: "red",
+                    color: "#f85c70",
                     fontSize: "1.8rem",
                     lineHeight: "1.1em",
                   },
@@ -569,15 +569,15 @@ export default function RegistrationStepper() {
                 onKeyDown={handleKeyDown} // Add the onKeyDown event handler
                 variant="standard"
                 placeholder="Write your answer here . . ."
-                required
+                
                 value={formData.diabetes}
                 sx={{
                   "& .MuiInputBase-input::placeholder": {
-                    color: "red",
+                    color: "#f85c70",
                     fontSize: "1.8rem",
                   },
                   "& .MuiInputBase-input": {
-                    color: "red",
+                    color: "#f85c70",
                     fontSize: "1.8rem",
                     lineHeight: "1.1em",
                   },
@@ -607,11 +607,11 @@ export default function RegistrationStepper() {
                 // rows={4}
                 sx={{
                   "& .MuiInputBase-input::placeholder": {
-                    color: "red",
+                    color: "#f85c70",
                     fontSize: "1.8rem",
                   },
                   "& .MuiInputBase-input": {
-                    color: "red",
+                    color: "#f85c70",
                     fontSize: "1.8rem",
                     lineHeight: "1.1em",
                   },
@@ -636,11 +636,11 @@ export default function RegistrationStepper() {
                 placeholder="Write your answer here . . ."
                 sx={{
                   "& .MuiInputBase-input::placeholder": {
-                    color: "red",
+                    color: "#f85c70",
                     fontSize: "1.8rem",
                   },
                   "& .MuiInputBase-input": {
-                    color: "red",
+                    color: "#f85c70",
                     fontSize: "1.8rem",
                     lineHeight: "1.1em",
                   },
@@ -666,11 +666,11 @@ export default function RegistrationStepper() {
                 value={formData.contactNumber}
                 sx={{
                   "& .MuiInputBase-input::placeholder": {
-                    color: "red",
+                    color: "#f85c70",
                     fontSize: "1.8rem",
                   },
                   "& .MuiInputBase-input": {
-                    color: "red",
+                    color: "#f85c70",
                     fontSize: "1.8rem",
                     lineHeight: "1.1em",
                   },

@@ -36,14 +36,24 @@ ul {
 ul li {
     font-size: .8rem;
     font-weight: 700;
-    color: red;
+    padding: 3px 5px;
+    color: #f85c70;
 }
-ul li span{
+.green span{
     font-size: .8rem;
     font-weight: 700;
-    color: grey;
-    background-color: red;
+    color: white;
+    background-color: #006400;
     padding: 3px 5px;
+    border-radius: 3px;
+}
+.blue span{
+    font-size: .8rem;
+    font-weight: 700;
+    color: white;
+    background-color: #1E90FF;
+    padding: 3px 5px;
+    border-radius: 3px;
 }
 .card-container{
     display: flex;
@@ -61,6 +71,7 @@ ul li span{
 }
 .card-screen{
     display: flex;
+    flex-direction: column;
     @media (max-width: 600px) {
        flex-direction: column;      
 }
