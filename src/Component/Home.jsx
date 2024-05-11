@@ -173,7 +173,7 @@ const Home = () => {
           <Typography>{`Matched Profile ${index + 1}` || "Profile"}</Typography> {/* Display user name or a default string */}
         </AccordionSummary>
                 <AccordionDetails>
-                <div className="flex">
+                <div className={!isMobile ? "flex" : 'flex-mobile'}>
           <div className="w-25">
             <h4>Patient Information</h4>
             <ul className="blue">
