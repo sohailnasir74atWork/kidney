@@ -13,12 +13,18 @@ import { useGlobalStats } from "../GlobelStats/GlobelStats";
 import MenuItem from "@mui/material/MenuItem";
 import { countryList } from "../Helper/countries";
 import { useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import { useEffect } from "react";
 
 export default function RegistrationStepper() {
   const theme = useTheme();
-  const { userData, setFetchData, bloodCompatibility, activeStep, setActiveStep } = useGlobalStats();
+  const {
+    userData,
+    setFetchData,
+    bloodCompatibility,
+    activeStep,
+    setActiveStep,
+  } = useGlobalStats();
   const navigate = useNavigate();
 
   // console.log(userData);
@@ -60,7 +66,6 @@ export default function RegistrationStepper() {
       });
     }
   }, [userData]); // Ensure userData is a dependency here
-  
 
   // function showSuccessAlert() {
   //   Swal.fire({
@@ -70,7 +75,7 @@ export default function RegistrationStepper() {
   //     confirmButtonText: 'Great!'
   //   });
   // }
-  
+
   // function showErrorAlert() {
   //   Swal.fire({
   //     title: 'Error!',
@@ -105,14 +110,15 @@ export default function RegistrationStepper() {
       case 8:
         // Check if blood types are incompatible
         if (checkCompatibility(formData.donorBloodGroup, formData.bloodType)) {
-          Swal.fire({ // SweetAlert error message
-            title: 'Already Compatible',
-            text: 'This match is already compatible, but you can still register to find an even better match.',           
-            icon: 'success',
-            confirmButtonText: 'OK'
+          Swal.fire({
+            // SweetAlert error message
+            title: "Already Compatible",
+            text: "This match is already compatible, but you can still register to find an even better match.",
+            icon: "success",
+            confirmButtonText: "OK",
           });
           return true;
-        }  else return true;
+        } else return true;
       case 9:
         return formData.donorTissueType.trim() !== "";
       case 10:
@@ -132,7 +138,7 @@ export default function RegistrationStepper() {
 
   // Update local state
   const handleInputChange = (field, value) => {
-    console.log('VALUE', value)
+    console.log("VALUE", value);
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -147,7 +153,7 @@ export default function RegistrationStepper() {
     if (isStepValid()) {
       updateDatabase(); // Update Firebase before moving to the next step
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  
+
       // Swal.fire({ // SweetAlert success message
       //   title: 'Step Complete!',
       //   text: 'You have successfully completed this step.',
@@ -155,15 +161,15 @@ export default function RegistrationStepper() {
       //   confirmButtonText: 'OK'
       // });
     } else {
-      Swal.fire({ // SweetAlert error message
-        title: 'Incomplete Step!',
-        text: 'Please fill all  fields for this step.',
-        icon: 'error',
-        confirmButtonText: 'OK'
+      Swal.fire({
+        // SweetAlert error message
+        title: "Incomplete Step!",
+        text: "Please fill all  fields for this step.",
+        icon: "error",
+        confirmButtonText: "OK",
       });
     }
   };
-  
 
   const handleComplete = () => {
     if (isStepValid()) {
@@ -192,7 +198,6 @@ export default function RegistrationStepper() {
   const handleCountryChange = (field, value) => {
     // setFormData((prev) => ({ ...prev, [field]: value }));
     updateDatabase(); // Update Firebase before moving to the next step
-
   };
   return (
     <Box className="stepper-container">
@@ -214,7 +219,6 @@ export default function RegistrationStepper() {
               1. Select your country.
             </p>
             <TextField
-              
               select
               variant="standard"
               fullWidth
@@ -231,7 +235,7 @@ export default function RegistrationStepper() {
                   lineHeight: "1.1em",
                 },
               }}
-              onChange={(e) => handleInputChange('country', e.target.value)}
+              onChange={(e) => handleInputChange("country", e.target.value)}
             >
               {countryList.map((country, index) => (
                 <MenuItem key={index} value={country}>
@@ -247,7 +251,6 @@ export default function RegistrationStepper() {
               2. What is the name of your city?
             </p>
             <TextField
-              
               fullWidth
               placeholder="Write your answer here . . ."
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
@@ -275,7 +278,6 @@ export default function RegistrationStepper() {
               2. What is the name of the patient?
             </p>
             <TextField
-              
               fullWidth
               placeholder="Write your answer here . . ."
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
@@ -303,7 +305,6 @@ export default function RegistrationStepper() {
               3. What is patient age?
             </p>
             <TextField
-              
               fullWidth
               onSubmit={handleNext}
               variant="standard"
@@ -340,7 +341,6 @@ export default function RegistrationStepper() {
             <TextField
               variant="standard"
               select
-              
               onSubmit={handleNext}
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
               fullWidth
@@ -370,7 +370,8 @@ export default function RegistrationStepper() {
         {activeStep === 5 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
-              5. Write tissue typing of patient (if not available then write "Not Available").
+              5. Write tissue typing of patient (if not available then write
+              "Not Available").
             </p>
             <TextField
               fullWidth
@@ -403,7 +404,6 @@ export default function RegistrationStepper() {
             <TextField
               fullWidth
               onSubmit={handleNext}
-              
               variant="standard"
               placeholder="Write your answer here . . ."
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
@@ -464,7 +464,6 @@ export default function RegistrationStepper() {
             </p>
             <TextField
               select
-              
               fullWidth
               onSubmit={handleNext}
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
@@ -496,13 +495,13 @@ export default function RegistrationStepper() {
         {activeStep === 9 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
-              9. Write tissue typing of donor (if not available then write "Not Available").
+              9. Write tissue typing of donor (if not available then write "Not
+              Available").
             </p>
             <TextField
               fullWidth
               onSubmit={handleNext}
               onKeyDown={handleKeyDown} // Add the onKeyDown event handler
-              
               placeholder="A*02, A*03, B*07, B*08, DRB1*15, DRB1*04"
               variant="standard"
               value={formData.donorTissueType}
@@ -569,7 +568,6 @@ export default function RegistrationStepper() {
                 onKeyDown={handleKeyDown} // Add the onKeyDown event handler
                 variant="standard"
                 placeholder="Write your answer here . . ."
-                
                 value={formData.diabetes}
                 sx={{
                   "& .MuiInputBase-input::placeholder": {
@@ -694,12 +692,7 @@ export default function RegistrationStepper() {
           variant="contained"
           sx={{ mr: 1 }}
         >
-          {/* {theme.direction === "rtl" ? (
-            <KeyboardArrowRight />
-          ) : (
-            <KeyboardArrowLeft />
-          )} */}
-          Back
+         Back
         </Button>
         <Button
           size="small"
@@ -708,11 +701,6 @@ export default function RegistrationStepper() {
           color={activeStep === 14 ? "success" : "primary"}
         >
           {activeStep === 14 ? "Finish" : "Next"}
-          {/* {theme.direction === "rtl" ? (
-            <KeyboardArrowLeft />
-          ) : (
-            <KeyboardArrowRight />
-          )} */}
         </Button>
       </Box>
     </Box>
