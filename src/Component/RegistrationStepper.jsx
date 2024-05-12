@@ -427,7 +427,7 @@ export default function RegistrationStepper() {
         {activeStep === 7 && (
           <>
             <p sx={{ mx: 2 }} className="questions">
-              7. Waht is donor's age ?
+              7. What is donor's age ?
             </p>
             <TextField
               fullWidth
