@@ -71,7 +71,7 @@ const Start = () => {
       height: '100vh',
     }}>
       <img src={logo} alt='logo' className='fade-in-out'/>
-      <Button variant='contained' onClick={handleLogin}>Login with One Click</Button>
+      <Button variant='contained' onClick={handleLogin}>Go for Dashboard with One Click</Button>
     </Box>
   );
 };
