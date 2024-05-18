@@ -4,8 +4,9 @@ import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Auth/context/authContext/Index';
 import { useGlobalStats } from '../GlobelStats/GlobelStats';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import CircularColor from '../Helper/Loader';
-import logo from "./../Assets/logo2.png"
+import logo from "./../Assets/logo2.webp";
 import { auth } from "./../Auth/firebase/auth";
 import {
   signInWithPopup,
@@ -18,6 +19,7 @@ const Start = () => {
   const [newUser, setNewUser] = useState(null); // Change initial state to null
   const navigate = useNavigate();
   const { userLoggedIn } = useAuth();
+  const isMobile = useMediaQuery('(max-width:600px)');
 
   useEffect(() => {
     if (!isLoading && !error) {
@@ -42,7 +44,7 @@ const Start = () => {
   };
 
   if (isLoading) {
-    return <CircularColor/>;
+    return <CircularColor />;
   }
 
   if (error) {
@@ -68,10 +70,11 @@ const Start = () => {
       justifyContent: 'center',
       flexDirection: 'column',
       alignItems: 'center',
-      height: '100vh',
+      height: isMobile ? '100%' : '100vh',
+      marginTop: isMobile ?  '150px' : ''
     }}>
-      <img src={logo} alt='logo' className='fade-in-out'/>
-      <Button variant='contained' onClick={handleLogin}>Go for Dashboard with One Click</Button>
+      <img src={logo} alt='logo' className='fade-in-out' />
+      <Button variant='contained' onClick={handleLogin}>Dashboard with One Click</Button>
     </Box>
   );
 };
